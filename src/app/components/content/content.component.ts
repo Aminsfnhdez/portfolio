@@ -6,10 +6,11 @@ import { TestimonialsComponent } from "../testimonials/testimonials.component";
 import { EducationComponent } from "../education/education.component";
 import { ArticlesComponent } from "../articles/articles.component";
 import { SuscribeComponent } from "../suscribe/suscribe.component";
+import { SkillsComponent } from "../skills/skills.component";
 
 @Component({
   selector: 'app-content',
-  imports: [ProfileComponent, ExperienceComponent, ProjectsComponent, TestimonialsComponent, EducationComponent, ArticlesComponent, SuscribeComponent],
+  imports: [ProfileComponent, ExperienceComponent, ProjectsComponent, TestimonialsComponent, EducationComponent, ArticlesComponent, SuscribeComponent, SkillsComponent],
   templateUrl: './content.component.html',
   styleUrl: './content.component.css'
 })
