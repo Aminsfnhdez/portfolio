@@ -1,7 +1,7 @@
 <!-- ========== HEADER ========== -->
 <header class="sticky top-0 inset-x-0 flex flex-wrap md:justify-start md:flex-nowrap z-50 w-full text-sm">
     <nav
-        class="mt-4 relative max-w-2xl w-full bg-white border border-gray-200 rounded-full mx-2 py-2.5 md:flex md:items-center md:justify-between md:py-0 md:px-4 md:mx-auto dark:bg-neutral-900 dark:border-neutral-700">
+        class="mt-4 relative max-w-2xl w-full bg-white border border-gray-200 rounded-md mx-2 py-2.5 md:flex md:items-center md:justify-between md:py-0 md:px-4 md:mx-auto dark:bg-neutral-900 dark:border-neutral-700">
         <div class="px-4 md:px-0 flex justify-between items-center">
             <div class="flex items-center">
                 <!-- Logo -->
@@ -21,7 +21,7 @@
                     class="hs-dark-mode hs-dark-mode-active:hidden relative flex justify-center items-center size-7 border border-gray-200 text-gray-500 rounded-full hover:bg-gray-200 focus:outline-hidden focus:bg-gray-200 dark:border-neutral-700 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:focus:bg-neutral-700"
                     data-hs-theme-click-value="dark" (click)="toggleTheme('dark')">
                     <span class="sr-only">Dark</span>
-                    <svg class="shrink-0 size-3.5" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                    <svg class="shrink-0 size-3.5 dark:text-neutral-200" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                         viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                         stroke-linejoin="round">
                         <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
@@ -32,7 +32,7 @@
                     class="hs-dark-mode hs-dark-mode-active:flex hidden relative justify-center items-center size-7 border border-gray-200 text-gray-500 rounded-full hover:bg-gray-200 focus:outline-hidden focus:bg-gray-200 dark:border-neutral-700 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:focus:bg-neutral-700"
                     data-hs-theme-click-value="light" (click)="toggleTheme('light')">
                     <span class="sr-only">Light</span>
-                    <svg class="shrink-0 size-3.5" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                    <svg class="shrink-0 size-3.5 dark:text-neutral-200" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                         viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                         stroke-linejoin="round">
                         <circle cx="12" cy="12" r="4"></circle>
@@ -59,8 +59,8 @@
                     class="hs-collapse-toggle flex justify-center items-center size-7 border border-gray-200 text-gray-500 rounded-full hover:bg-gray-200 focus:outline-hidden focus:bg-gray-200 dark:border-neutral-700 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:focus:bg-neutral-700"
                     id="hs-navbar-header-floating-collapse" aria-expanded="false"
                     aria-controls="hs-navbar-header-floating" aria-label="Toggle navigation"
-                    data-hs-collapse="#hs-navbar-header-floating">
-                    <svg class="hs-collapse-open:hidden shrink-0 size-3.5" xmlns="http://www.w3.org/2000/svg" width="24"
+                    (click)="toggleMenu()">
+                    <svg class="hs-collapse-open:hidden shrink-0 size-3.5 dark:text-neutral-200" xmlns="http://www.w3.org/2000/svg" width="24"
                         height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                         stroke-linecap="round" stroke-linejoin="round">
                         <line x1="3" x2="21" y1="6" y2="6" />
@@ -79,18 +79,26 @@
         </div>
 
         <div id="hs-navbar-header-floating"
-            class="hidden hs-collapse overflow-hidden transition-all duration-300 basis-full grow md:block"
+            [ngClass]="{'hidden': !isMenuOpen, 'block': isMenuOpen}"
+            class="hs-collapse overflow-hidden transition-all duration-300 basis-full grow md:block"
             aria-labelledby="hs-navbar-header-floating-collapse">
             <div
                 class="flex flex-col md:flex-row md:items-center md:justify-end gap-2 md:gap-3 mt-3 md:mt-0 py-2 md:py-0 md:ps-7">
-                <a class="py-0.5 md:py-3 px-4 md:px-1 border-s-2 md:border-s-0 md:border-b-2 border-gray-800 font-medium text-gray-800 focus:outline-hidden dark:border-neutral-200 dark:text-neutral-200"
-                    href="#experience" aria-current="page">Experience</a>
-                <a class="py-0.5 md:py-3 px-4 md:px-1 border-s-2 md:border-s-0 md:border-b-2 border-transparent text-gray-500 hover:text-gray-800 focus:outline-hidden dark:text-neutral-400 dark:hover:text-neutral-200"
-                    href="#projects">Projects</a>
-                <a class="py-0.5 md:py-3 px-4 md:px-1 border-s-2 md:border-s-0 md:border-b-2 border-transparent text-gray-500 hover:text-gray-800 focus:outline-hidden dark:text-neutral-400 dark:hover:text-neutral-200"
-                    href="#education">Education</a>
-                <a class="py-0.5 md:py-3 px-4 md:px-1 border-s-2 md:border-s-0 md:border-b-2 border-transparent text-gray-500 hover:text-gray-800 focus:outline-hidden dark:text-neutral-400 dark:hover:text-neutral-200"
-                    href="#skills">Skills</a>
+                <a [ngClass]="{'bg-gray-200 text-gray-800': activeSection === 'experience', 'text-gray-500': activeSection !== 'experience'}"
+                    class="py-0.5 md:py-3 px-4 md:px-1 border-s-2 md:border-s-0 border-transparent font-medium focus:outline-hidden dark:border-neutral-200 dark:text-neutral-200"
+                    href="#experience" (click)="selectMenuItem('experience')">Experience</a>
+
+                <a [ngClass]="{'bg-gray-200 text-gray-800': activeSection === 'projects', 'text-gray-500': activeSection !== 'projects'}"
+                    class="py-0.5 md:py-3 px-4 md:px-1 border-s-2 md:border-s-0 md:border-b-2 border-transparent hover:text-gray-800 focus:outline-hidden dark:text-neutral-400 dark:hover:text-neutral-200"
+                    href="#projects" (click)="selectMenuItem('projects')">Projects</a>
+
+                <a [ngClass]="{'bg-gray-200 text-gray-800': activeSection === 'education', 'text-gray-500': activeSection !== 'education'}"
+                    class="py-0.5 md:py-3 px-4 md:px-1 border-s-2 md:border-s-0 md:border-b-2 border-transparent hover:text-gray-800 focus:outline-hidden dark:text-neutral-400 dark:hover:text-neutral-200"
+                    href="#education" (click)="selectMenuItem('education')">Education</a>
+
+                <a [ngClass]="{'bg-gray-200 text-gray-800': activeSection === 'skills', 'text-gray-500': activeSection !== 'skills'}"
+                    class="py-0.5 md:py-3 px-4 md:px-1 border-s-2 md:border-s-0 md:border-b-2 border-transparent hover:text-gray-800 focus:outline-hidden dark:text-neutral-400 dark:hover:text-neutral-200"
+                    href="#skills" (click)="selectMenuItem('skills')">Skills</a>
             </div>
         </div>
     </nav>
